@@ -13,3 +13,201 @@ int* twoSum(int* nums, int numsSize, int target, int* returnSize) {
     *returnSize = 0;
     return 0;
 }
+
+
+int value(char r) {
+    switch(r) {
+        case 'I': return 1;
+        case 'V': return 5;
+        case 'X': return 10;
+        case 'L': return 50;
+        case 'C': return 100;
+        case 'D': return 500;
+        case 'M': return 1000;
+        default: return 0;
+    }
+}
+
+int romanToInt(char* s) {
+    int sum = 0;
+    int len = strlen(s);
+    for (int i = 0; i < len; i++) {
+        int s1 = value(s[i]);
+        if (i+1 < len) {
+            int s2 = value(s[i+1]);
+            if (s1 >= s2)
+                sum += s1;
+            else {
+                sum += (s2 - s1);
+                i++; 
+            }
+        } else {
+            sum += s1;
+        }
+    }
+    return sum;
+}
+
+int removeElement(int *nums, int numsSize, int val) {
+  int count = 0, temp = 0;
+  for (int i = 0; i < numsSize; i++) {
+    if (nums[i] != val) {
+      temp = nums[i];
+      nums[i] = nums[count];
+      nums[count] = temp;
+
+      count++;
+    }
+  }
+  return count;
+}
+
+
+
+typedef int boo;
+#define true 1
+#define false 0
+
+struct Node {
+    char val;
+    struct Node *next;
+};
+
+void push(struct Node** top_pt, char new_data)
+{
+    struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+    new_node->val = new_data;
+    new_node->next = *top_pt;
+    
+    *top_pt = new_node;
+}
+
+int pop(struct Node** top_pt)
+{
+    if (*top_pt == 0)
+    {
+        printf("stack overflow\n");
+        exit(0);
+    }
+    struct Node *top = *top_pt;
+    char res = top->val;
+    *top_pt = top->next;
+    free(top);
+    return res;
+}
+
+
+
+int* plusOne(int* digits, int digitsSize, int* returnSize) {
+    int *ans = (int *)malloc((digitsSize + 1) * sizeof(int));
+    *returnSize = digitsSize;
+    int i;
+    int sum = 1; /* plus one */
+    for (i = digitsSize - 1; i >= 0; i--) {
+        sum += digits[i];
+        ans[i + 1] = sum % 10;
+        sum /= 10;
+    }
+    if (sum) {
+        ans[0] = sum;
+        *returnSize = *returnSize + 1;
+        return ans;
+    }
+    else {
+        return ans + 1;
+    }
+}
+
+int* plusOne(int* digits, int digitsSize, int* returnSize) {
+    int *ans = (int *)malloc((digitsSize + 1) * sizeof(int));
+    *returnSize = digitsSize;
+    int i;
+    int sum = 1; /* plus one */
+    for (i = digitsSize - 1; i >= 0; i--) {
+        sum += digits[i];
+        ans[i + 1] = sum % 10;
+        sum /= 10;
+    }
+    if (sum) {
+        ans[0] = sum;
+        *returnSize = *returnSize + 1;
+        return ans;
+    }
+    else {
+        return ans + 1;
+    }
+}
+
+/* Newton's method */
+int mySqrt(int square) {
+#define EPSILON 0.00000001f
+    double x = 1.0;
+    double f, d;
+
+    for (int i = 0; i < 32; i++) {
+        f = x * x - square;
+        if ((f > 0 && f < EPSILON) || (f < 0 && f > -EPSILON)) break;
+        d = 2 * x;
+        x = x - f / d;
+    }
+
+    return x;
+}
+
+/* Fast Newton's method
+ * https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Approximations_that_depend_on_the_floating_point_representation
+ */
+int mySqrt0(int x) {
+    float f = x;
+    int val_int = *(int *)&f;
+
+    int a = 2;
+    val_int = (1 << 29) + (val_int >> 1) - (1 << 22) + a;
+
+    f = *(float *)&val_int;
+    double d = f;
+    d = 0.5 * d + 0.5 * x / d;
+    d = 0.5 * d + 0.5 * x / d;
+    d = 0.5 * d + 0.5 * x / d;
+    return d;
+}
+
+/* Binary Search */
+int mySqrt1(int x) {
+    if (x <= 1) {
+        return x;
+    }
+
+    int l, m, r;
+    l = 1;
+    r = x;
+
+    while (l < r) {
+        m = (l + r) / 2;
+
+        if (x / m < m)
+            r = m;
+        else
+            l = m + 1;
+    }
+
+    return r - 1;
+}
+
+int climbStairs(int n) {
+    if (n < 3) return n;
+    int *d = (int *)calloc(n, sizeof(int));
+    int i;
+    d[0] = 1;
+    d[1] = 2;
+    for (i = 2; i < n; i++) {
+        d[i] = d[i - 1] + d[i - 2];
+    }
+    return d[n - 1];
+}
+
+struct ListnNode {
+    int val;
+    struct ListNode *next;
+};
+
