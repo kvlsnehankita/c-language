@@ -211,3 +211,311 @@ struct ListnNode {
     struct ListNode *next;
 };
 
+char ch2lower(char ch) {
+    if (ch >= 'A' && ch <= 'Z')
+        ch += 0x20;
+
+    return ch;
+}
+
+ isPalindrome(char *s) {
+    int len = strlen(s);
+    int head, tail;
+    head = tail = 0;
+    tail = len - 1;
+
+    while (head <= tail) {
+        while (ch2lower(s[head]) < '0'
+            || (ch2lower(s[head]) > '9' && ch2lower(s[head]) < 'a')
+            || ch2lower(s[head]) > 'z')
+        {
+            head++;
+            if (head > tail) break;
+        }
+
+        while (ch2lower(s[tail]) < '0'
+            || (ch2lower(s[tail]) > '9' && ch2lower(s[tail]) < 'a')
+            || ch2lower(s[tail]) > 'z')
+        {
+            tail--;
+            if (head > tail) break;
+        }
+
+        if (head > tail) break;
+
+        if (ch2lower(s[head]) != ch2lower(s[tail])) return false;
+
+        head++;
+        tail--;
+    }
+
+    return true;
+}
+
+struct ListdNode {
+    int val;
+    struct ListNode *next;
+};
+
+bool hasCycle(struct ListNode *head) {
+    if (head == NULL) return false;
+    struct ListNode *fast, *slow;
+    fast = slow = head;
+    while (fast && slow) {
+        if (fast) fast = fast->next;
+        if (fast) fast = fast->next;
+
+        if (slow) slow = slow->next;
+
+        if (fast == slow && slow != NULL) return true;
+    }
+
+    return false;
+}
+
+int maxProfit(int prices[], int n){
+    int i;
+    int ret, min;
+    ret = 0;
+    min = prices[0];
+    for (i = 0; i < n; i++) {
+        if (prices[i] < min)
+            min = prices[i];
+        
+        if (prices[i] - min > ret)
+            ret = prices[i] - min;
+    }
+    return ret;
+}
+
+int searchInsert(int A[], int n, int target) {
+    int l, r, m;
+    l = 0;
+    r = n - 1;
+    while (l <= r) {
+        m = (l + r) / 2;
+        if (A[m] == target) {
+            return m;
+        }
+        else if (A[m] < target) {
+            l = m + 1;
+        }
+        else {
+            r = m - 1;
+        }
+    }
+    return l;
+}
+
+int singleNumber(int A[], int n) {
+    int one = 0;
+    int i;
+    for (i = 0; i < n; i++) {
+        one = one ^ A[i];
+    }
+    return one;
+}
+
+char ch2lower(char ch) {
+    if (ch >= 'A' && ch <= 'Z')
+        ch += 0x20;
+
+    return ch;
+}
+
+bool isPalindrome(char *s) {
+    int len = strlen(s);
+    int head, tail;
+    head = tail = 0;
+    tail = len - 1;
+
+    while (head <= tail) {
+        while (ch2lower(s[head]) < '0'
+            || (ch2lower(s[head]) > '9' && ch2lower(s[head]) < 'a')
+            || ch2lower(s[head]) > 'z')
+        {
+            head++;
+            if (head > tail) break;
+        }
+
+        while (ch2lower(s[tail]) < '0'
+            || (ch2lower(s[tail]) > '9' && ch2lower(s[tail]) < 'a')
+            || ch2lower(s[tail]) > 'z')
+        {
+            tail--;
+            if (head > tail) break;
+        }
+
+        if (head > tail) break;
+
+        if (ch2lower(s[head]) != ch2lower(s[tail])) return false;
+
+        head++;
+        tail--;
+    }
+
+    return true;
+}
+
+struct ListnNode {
+    int val;
+    struct ListNode *next;
+};
+
+struct ListNode* deleteDuplicates(struct ListNode* head) {
+    if (head == NULL) return head;
+
+    struct ListNode *pre = head;
+    struct ListNode *p = head->next;
+    
+    while (p) {
+        if (pre->val == p->val) {
+            p = p->next;
+            pre->next = p;
+        }
+        else {
+            pre = p;
+            p = p->next;
+        }
+    }
+
+    return head;
+}
+
+
+int climbStairs(int n) {
+    if (n < 3) return n;
+    int *d = (int *)calloc(n, sizeof(int));
+    int i;
+    d[0] = 1;
+    d[1] = 2;
+    for (i = 2; i < n; i++) {
+        d[i] = d[i - 1] + d[i - 2];
+    }
+    return d[n - 1];
+}
+
+
+int value(char r) {
+    switch(r) {
+        case 'I': return 1;
+        case 'V': return 5;
+        case 'X': return 10;
+        case 'L': return 50;
+        case 'C': return 100;
+        case 'D': return 500;
+        case 'M': return 1000;
+        default: return 0;
+    }
+}
+
+int romanToInt(char* s) {
+    int sum = 0;
+    int len = strlen(s);
+    for (int i = 0; i < len; i++) {
+        int s1 = value(s[i]);
+        if (i+1 < len) {
+            int s2 = value(s[i+1]);
+            if (s1 >= s2)
+                sum += s1;
+            else {
+                sum += (s2 - s1);
+                i++; 
+            }
+        } else {
+            sum += s1;
+        }
+    }
+    return sum;
+}
+
+
+
+int removeElement(int *nums, int numsSize, int val) {
+  int count = 0, temp = 0;
+  for (int i = 0; i < numsSize; i++) {
+    if (nums[i] != val) {
+      temp = nums[i];
+      nums[i] = nums[count];
+      nums[count] = temp;
+
+      count++;
+    }
+  }
+  return count;
+}
+
+
+typedef int boo;
+#define true 1
+#define false 0
+
+struct Node {
+    char val;
+    struct Node *next;
+};
+
+void push(struct Node** top_pt, char new_data)
+{
+    struct Node *new_node = (struct Node *)malloc(sizeof(struct Node));
+    new_node->val = new_data;
+    new_node->next = *top_pt;
+    
+    *top_pt = new_node;
+}
+
+int pop(struct Node** top_pt)
+{
+    if (*top_pt == NULL)
+    {
+        printf("stack overflow\n");
+        exit(0);
+    }
+    struct Node *top = *top_pt;
+    char res = top->val;
+    *top_pt = top->next;
+    free(top);
+    return res;
+}
+
+bool isValid(char *s) {
+    struct Node *stack = NULL;
+    int i;
+    int len = strlen(s);
+    for (i = 0; i < len; i++) {
+        if (s[i] == '(' || s[i] == '[' || s[i] == '{') {
+            push(&stack, s[i]);
+        }
+        else {
+            if (stack == NULL)
+                return false;
+            char top = pop(&stack);
+            if (s[i] == ')') {
+                if (top != '(') return false;
+            }
+            else if (s[i] == ']'){
+                if (top != '[') return false;
+            }
+            else if (s[i] == '}'){
+                if (top != '{') return false;
+            }
+        }
+    }
+    if (stack == NULL)
+        return true;
+    else
+        return false;
+}
+
+void print_stack(struct Node** top_pt)
+{
+    struct Node *t = *top_pt;
+    while (t != NULL)
+    {
+        struct Node *tmp_node = t;
+        printf("%c ", tmp_node->val);
+        t = tmp_node->next;
+    }
+    printf("\n");
+}
+
